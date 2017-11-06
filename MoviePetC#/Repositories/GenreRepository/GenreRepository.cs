@@ -15,6 +15,11 @@ namespace MoviePet.Repositories.GenreRepository
     {
         private readonly AppDataContext _db;
 
+        public GenreRepository(AppDataContext db)
+        {
+            _db = db;
+        }
+
         public List<GenreDTO> GetGenreByMovieID(int movieID)
         {
             var genres = (from g in _db.Genres
@@ -80,6 +85,5 @@ namespace MoviePet.Repositories.GenreRepository
                 return false;
             }
         }
-
     }
 }

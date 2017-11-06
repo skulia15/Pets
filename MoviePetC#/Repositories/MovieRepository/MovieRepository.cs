@@ -32,10 +32,10 @@ namespace MoviePet.Repositories.MovieRepository
                               rating = m.rating,
                               releaseDate = m.releaseDate
                           }).ToList();
-            foreach (MovieDTO movie in movies)
-            {
-                movie.genre = GetGenreByMovieID(movie.movieID);
-            }
+            // foreach (MovieDTO movie in movies)
+            // {
+            //     movie.genre = GetGenreByMovieID(movie.movieID);
+            // }
             return movies;
         }
 
@@ -50,7 +50,7 @@ namespace MoviePet.Repositories.MovieRepository
                         title = m.title,
                         summary = m.summary,
                         rating = m.rating,
-                        genre = GetGenreByMovieID(movieID),
+                        //genre = GetGenreByMovieID(movieID),
                         releaseDate = m.releaseDate
                     }).SingleOrDefault();
         }
@@ -61,8 +61,6 @@ namespace MoviePet.Repositories.MovieRepository
                     where m.movieID == movieID
                     select m).SingleOrDefault();
         }
-
-        
 
         public bool CreateMovie(MovieViewModel newMovie)
         {
@@ -89,43 +87,14 @@ namespace MoviePet.Repositories.MovieRepository
                 Console.WriteLine(error.Message);
                 return false;
             }
-
-            // Add an entry for all genres in the movie-genre relation table
-            return AddGenreToMovie(movie.Entity.movieID, newMovie.genre);
-        }
-
-        public bool AddGenreToMovie(int movieID, string[] genres)
-        {
-            foreach (string genre in genres)
-            {
-                int genreID = getGenreID(genre);
-                _db.MovieinGenre.Add(new MovieInGenre
-                {
-                    movieID = movieID,
-                    genreID = genreID
-                });
-            }
-            try
-            {
-                _db.SaveChanges();
-            }
-            catch (Exception error)
-            {
-                Console.WriteLine(error.Message);
-                return false;
-            }
             return true;
         }
+
 
         public bool DeleteMovie(int movieID)
         {
             // Find the move in the database
             var movieToDelete = GetMovieObjectByID(movieID);
-            if (!DeleteMovieFromGenres(movieID))
-            {
-                // Unable to remove movie from genres
-                return false;
-            }
             try
             {
                 _db.Movies.Remove(movieToDelete);
@@ -176,16 +145,16 @@ namespace MoviePet.Repositories.MovieRepository
             if (updatedMovie.genre != null)
             {
                 // Remove previous set of genres
-                if(!DeleteMovieFromGenres(movieID)){
-                    Console.WriteLine("Failed removing genre to movie");
-                    return null;
-                }
+                // if(!DeleteMovieFromGenres(movieID)){
+                //     Console.WriteLine("Failed removing genre to movie");
+                //     return null;
+                // }
                 // Add the provided genres to the movie
-                if (!AddGenreToMovie(movieID, updatedMovie.genre))
-                {
-                    Console.WriteLine("Failed adding genre to movie");
-                    return null;
-                }
+                // if (!AddGenreToMovie(movieID, updatedMovie.genre))
+                // {
+                //     Console.WriteLine("Failed adding genre to movie");
+                //     return null;
+                // }
             }
             try
             {
@@ -201,7 +170,7 @@ namespace MoviePet.Repositories.MovieRepository
             {
                 movieID = movie.movieID,
                 title = movie.title,
-                genre = GetGenreByMovieID(movieID),
+                //genre = GetGenreByMovieID(movieID),
                 releaseDate = movie.releaseDate,
                 rating = movie.rating,
                 summary = movie.summary

@@ -11,7 +11,7 @@ namespace MoviePet.Repositories.MovieRepository
         IEnumerable<MovieDTO> GetMovies();
         MovieDTO GetMovieByID(int movieID);
         Movie GetMovieObjectByID(int movieID);
-        bool CreateMovie(MovieViewModel newMovie);
+        bool CreateMovie(MovieViewModel newMovie);x
         bool DeleteMovie(int movieID);
         bool MovieExistsByID(int movieID);
         MovieDTO UpdateMovie(int movieID, MovieViewModel updatedMovie);

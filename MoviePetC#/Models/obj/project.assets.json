@@ -177,23 +177,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Notandi\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/home/skulipardus/.nuget/packages/": {},
+    "/home/skulipardus/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\Models\\Models.csproj",
+      "projectUniqueName": "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/Models/Models.csproj",
       "projectName": "Models",
-      "projectPath": "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\Models\\Models.csproj",
-      "packagesPath": "C:\\Users\\Notandi\\.nuget\\packages\\",
-      "outputPath": "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\Models\\obj\\",
+      "projectPath": "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/Models/Models.csproj",
+      "packagesPath": "/home/skulipardus/.nuget/packages/",
+      "outputPath": "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/Models/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/home/skulipardus/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Notandi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/skulipardus/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"

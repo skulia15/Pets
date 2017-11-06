@@ -12,6 +12,5 @@ namespace MoviePet.Models.DTOModels {
         public double rating { get; set; }
         public List<GenreDTO> genre { get; set; }
         public string releaseDate { get; set; }
-
     }
 }

@@ -20,3 +20,7 @@ Populate DB from source
 Script to reset and repopulate database
 Close DB when done
 Write Exceptions
+
+
+NEEDED:
+.Net Core 2.0
