@@ -12590,23 +12590,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Notandi\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/home/skulipardus/.nuget/packages/": {},
+    "/home/skulipardus/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\API\\API.csproj",
+      "projectUniqueName": "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/API/API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\API\\API.csproj",
-      "packagesPath": "C:\\Users\\Notandi\\.nuget\\packages\\",
-      "outputPath": "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\API\\obj\\",
+      "projectPath": "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/API/API.csproj",
+      "packagesPath": "/home/skulipardus/.nuget/packages/",
+      "outputPath": "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/API/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/home/skulipardus/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Notandi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/skulipardus/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
@@ -12617,14 +12617,14 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\Models\\Models.csproj": {
-              "projectPath": "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\Models\\Models.csproj"
+            "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/Models/Models.csproj": {
+              "projectPath": "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/Models/Models.csproj"
             },
-            "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\Services\\Services.csproj": {
-              "projectPath": "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\Services\\Services.csproj"
+            "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/Services/Services.csproj": {
+              "projectPath": "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/Services/Services.csproj"
             },
-            "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\Repositories\\Repositories.csproj": {
-              "projectPath": "C:\\Skúla stöff\\Háskólinn í Reykjavík\\OneDrive for Business\\Pets\\MoviePetC#\\Repositories\\Repositories.csproj"
+            "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/Repositories/Repositories.csproj": {
+              "projectPath": "/home/skulipardus/Desktop/Háskólinn í Reykjavík/Pets/MoviePetC#/Repositories/Repositories.csproj"
             }
           }
         }

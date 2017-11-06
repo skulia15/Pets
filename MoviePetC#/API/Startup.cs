@@ -29,6 +29,8 @@ namespace MoviePet
             services.AddMvc();
             services.AddTransient<IMovieRepository, MovieRepository>();
             services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IGenreReporitory, GenreRepository>();
+            services.AddTransient<IGenreService, GenreService>();
             services.AddDbContext<AppDataContext>(options =>
                 options.UseSqlite("Data Source=../Repositories/movieAPI.db", b => b.MigrationsAssembly("API")));
         }

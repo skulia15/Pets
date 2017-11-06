@@ -16,12 +16,18 @@ namespace MoviePet.Controllers {
         private readonly IGenreService _GenreService;
         public MovieController(IMovieService MovieService, IGenreService GenreService) {
             _MovieService = MovieService;
+            _GenreService = GenreService;
         }
+
         // GET /api/Movies
         // Get all movies
         [HttpGet(Name = "GetMovies")]
         public IActionResult GetMovies() {
             var movies = _MovieService.GetMovies();
+            foreach (MovieDTO movie in movies)
+            {
+                movie.genre = _GenreService.GetGenreByMovieID(movie.movieID);
+            }
             if(movies == null){
                 return NotFound("No Movies registered in the database");
             }
@@ -33,6 +39,7 @@ namespace MoviePet.Controllers {
         [HttpGet("{movieID?}", Name = "GetMovieByID")]
         public IActionResult GetMovieByID(int movieID) {
             var movie = _MovieService.GetMovieByID(movieID);
+            movie.genre = _GenreService.GetGenreByMovieID(movieID);
             if(movie == null){
                 return NotFound("No Movie is registered with the specified ID");
             }
@@ -65,6 +72,9 @@ namespace MoviePet.Controllers {
             if(!_MovieService.MovieExistsByID(movieID)){
                 return NotFound();
             }
+            if(!_GenreService.DeleteMovieFromGenres(movieID)){
+                return StatusCode(500);
+            }
 
             bool success = _MovieService.DeleteMovie(movieID);
             if (!success) {
@@ -91,9 +101,20 @@ namespace MoviePet.Controllers {
             if (updatedMovieDTO == null) {
                 return BadRequest("Failed to update movie");
             }
+            // If genre is being updated
+            if(updatedMovie.genre != null){
+                if(!_GenreService.DeleteMovieFromGenres(movieID)){
+                    return BadRequest("Failed to remove movie-genre relations");
+                }
+                // Add an entry for all genres in the movie-genre relation table
+                if(!_GenreService.AddGenreToMovie(updatedMovieDTO.movieID, updatedMovie.genre)){
+                    return BadRequest("Failed to add genre to movie");
+                }
+            }
+            updatedMovieDTO.genre = _GenreService.GetGenreByMovieID(movieID);
 
             return Ok(updatedMovieDTO);
         }
 
     }
-}
+}   
