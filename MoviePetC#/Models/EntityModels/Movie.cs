@@ -1,5 +1,6 @@
+using System;
 /// <summary>
-/// Information about each movie
+/// Model Class for the Movie Object
 /// </summary>
 namespace MoviePet.Models.EntityModels {
     public class Movie {
@@ -9,7 +10,6 @@ namespace MoviePet.Models.EntityModels {
         public string title { get; set; }
         public string summary { get; set; }
         public double rating { get; set; }
-        //public int genreID { get; set; }
-        public int year { get; set; }
+        public string releaseDate { get; set; }
     }
 }

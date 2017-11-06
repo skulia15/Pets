@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using MoviePet.Models.DTOModels;
@@ -8,7 +9,7 @@ using MoviePet.Models.ViewModels;
 /// <summary>
 /// This class querys the database as requested by its service class
 /// </summary>
-namespace MoviePet.Repositories
+namespace MoviePet.Repositories.MovieRepository
 {
     public class MovieRepository : IMovieRepository
     {
@@ -17,21 +18,22 @@ namespace MoviePet.Repositories
         public MovieRepository(AppDataContext db)
         {
             _db = db;
+
         }
         // APIDOCS
         public IEnumerable<MovieDTO> GetMovies()
         {
             var movies = (from m in _db.Movies
-                    select new MovieDTO
-                    {
-                        movieID = m.movieID,
-                        title = m.title,
-                        summary = m.summary,
-                        rating = m.rating,
-                        //genre = GetGenreByMovieID(m.movieID),
-                        year = m.year
-                    }).ToList();
-            foreach(MovieDTO movie in movies){
+                          select new MovieDTO
+                          {
+                              movieID = m.movieID,
+                              title = m.title,
+                              summary = m.summary,
+                              rating = m.rating,
+                              releaseDate = m.releaseDate
+                          }).ToList();
+            foreach (MovieDTO movie in movies)
+            {
                 movie.genre = GetGenreByMovieID(movie.movieID);
             }
             return movies;
@@ -49,32 +51,35 @@ namespace MoviePet.Repositories
                         summary = m.summary,
                         rating = m.rating,
                         genre = GetGenreByMovieID(movieID),
-                        year = m.year
+                        releaseDate = m.releaseDate
                     }).SingleOrDefault();
         }
 
-        public List<Genre> GetGenreByMovieID(int movieID)
+        public Movie GetMovieObjectByID(int movieID)
         {
-            var genres = (from g in _db.Genres
-                    join mg in _db.MovieinGenre
-                    on g.genreID equals mg.genreID
-                    where mg.movieID == movieID
-                    select g).ToList();
-            return genres;
+            return (from m in _db.Movies
+                    where m.movieID == movieID
+                    select m).SingleOrDefault();
         }
+
+        
 
         public bool CreateMovie(MovieViewModel newMovie)
         {
             // TODO: Check if the movie already exists, what is the criteria?
             // TODO: Check required fields for the movie
+            // For using TitleCase
+            var textInfo = new CultureInfo("en-US").TextInfo;
             var movie = _db.Movies.Add(new Movie
             {
-                title = newMovie.title,
+                title = textInfo.ToTitleCase(newMovie.title),
                 summary = newMovie.summary,
-                //genre = newMovie.genre,
-                year = newMovie.year
+                // Parse the provided date string to a DateTime Object
+                // Then Standardize the input
+                releaseDate = DateTime.Parse(newMovie.releaseDate).ToString("yyyy-MM-dd")
             });
-            
+
+            // Save changes to database here so that the movie object gets an ID
             try
             {
                 _db.SaveChanges();
@@ -85,15 +90,22 @@ namespace MoviePet.Repositories
                 return false;
             }
 
-            foreach(string genre in newMovie.genre){
+            // Add an entry for all genres in the movie-genre relation table
+            return AddGenreToMovie(movie.Entity.movieID, newMovie.genre);
+        }
+
+        public bool AddGenreToMovie(int movieID, string[] genres)
+        {
+            foreach (string genre in genres)
+            {
                 int genreID = getGenreID(genre);
-                _db.MovieinGenre.Add(new MovieInGenre{
-                    movieID = movie.Entity.movieID,
+                _db.MovieinGenre.Add(new MovieInGenre
+                {
+                    movieID = movieID,
                     genreID = genreID
                 });
             }
-
-             try
+            try
             {
                 _db.SaveChanges();
             }
@@ -102,22 +114,18 @@ namespace MoviePet.Repositories
                 Console.WriteLine(error.Message);
                 return false;
             }
-
             return true;
-        }
-
-        public int getGenreID(string genre){
-            var id = (from g in _db.Genres
-                    where g.genreTitle.ToLower() == genre.ToLower()
-                    select g.genreID).SingleOrDefault();
-            return id;
         }
 
         public bool DeleteMovie(int movieID)
         {
-            var movieToDelete = (from m in _db.Movies
-                                 where m.movieID == movieID
-                                 select m).SingleOrDefault();
+            // Find the move in the database
+            var movieToDelete = GetMovieObjectByID(movieID);
+            if (!DeleteMovieFromGenres(movieID))
+            {
+                // Unable to remove movie from genres
+                return false;
+            }
             try
             {
                 _db.Movies.Remove(movieToDelete);
@@ -131,6 +139,7 @@ namespace MoviePet.Repositories
             }
         }
 
+        // Checks if movie exists
         public bool MovieExistsByID(int movieID)
         {
             var movie = (from m in _db.Movies
@@ -143,16 +152,41 @@ namespace MoviePet.Repositories
             return false;
         }
 
+        // Updates a movie with the provided information
         public MovieDTO UpdateMovie(int movieID, MovieViewModel updatedMovie)
         {
             // Fetch the movie to update
-            var movie = GetMovieByID(movieID);
+            var movie = GetMovieObjectByID(movieID);
             // Update its values with the provided information
-            movie.title = updatedMovie.title;
-            //movie.genre = updatedMovie.genre;
-            movie.summary = updatedMovie.summary;
-            movie.year = updatedMovie.year;
-
+            if (updatedMovie.title != null)
+            {
+                var textInfo = new CultureInfo("en-US").TextInfo;
+                movie.title = textInfo.ToTitleCase(updatedMovie.title);
+            }
+            if (updatedMovie.summary != null)
+            {
+                movie.summary = updatedMovie.summary;
+            }
+            if (updatedMovie.releaseDate != null)
+            {
+                // Parse the provided date string to a DateTime Object
+                // Then Standardize the input
+                movie.releaseDate = DateTime.Parse(updatedMovie.releaseDate).ToString("yyyy-MM-dd");
+            }
+            if (updatedMovie.genre != null)
+            {
+                // Remove previous set of genres
+                if(!DeleteMovieFromGenres(movieID)){
+                    Console.WriteLine("Failed removing genre to movie");
+                    return null;
+                }
+                // Add the provided genres to the movie
+                if (!AddGenreToMovie(movieID, updatedMovie.genre))
+                {
+                    Console.WriteLine("Failed adding genre to movie");
+                    return null;
+                }
+            }
             try
             {
                 _db.SaveChanges();
@@ -165,9 +199,10 @@ namespace MoviePet.Repositories
 
             return new MovieDTO()
             {
+                movieID = movie.movieID,
                 title = movie.title,
-                //genre = movie.genre,
-                year = movie.year,
+                genre = GetGenreByMovieID(movieID),
+                releaseDate = movie.releaseDate,
                 rating = movie.rating,
                 summary = movie.summary
             };

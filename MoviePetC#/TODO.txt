@@ -1,0 +1,22 @@
+Unit testing
+Move Genre to a specific service
+Add all movierepo functions to imovierepo
+Check required fields in posting movie
+Deal with undefined genres
+Documentation
+Readme.md
+Build script
+Continuous integration
+Comments
+Reviews
+Actors
+Director
+Authentication!
+Image upload
+Front end
+	-Home page
+	-Bootstrap?
+Populate DB from source
+Script to reset and repopulate database
+Close DB when done
+Write Exceptions

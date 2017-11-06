@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using MoviePet.Models.DTOModels;
 using MoviePet.Models.ViewModels;
-using MoviePet.Repositories;
+using MoviePet.Repositories.MovieRepository;
 
-namespace MoviePet.Services
+namespace MoviePet.Services.MovieServices
 {
     public class MovieService : IMovieService {
         private readonly IMovieRepository _repo;

@@ -1,5 +1,6 @@
+using System;
 /// <summary>
-/// Handles information given by the user
+/// View Model for the Movie Object
 /// </summary>
 namespace MoviePet.Models.ViewModels
 {
@@ -8,6 +9,6 @@ namespace MoviePet.Models.ViewModels
         public string title { get; set; }
         public string summary { get; set; }
         public string [] genre { get; set; }
-        public int year { get; set; }
+        public string releaseDate { get; set; }
     }
 }

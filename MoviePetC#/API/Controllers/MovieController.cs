@@ -13,7 +13,8 @@ namespace MoviePet.Controllers {
     [Route("api/Movies")]
     public class MovieController : Controller {
         private readonly IMovieService _MovieService;
-        public MovieController(IMovieService MovieService) {
+        private readonly IGenreService _GenreService;
+        public MovieController(IMovieService MovieService, IGenreService GenreService) {
             _MovieService = MovieService;
         }
         // GET /api/Movies

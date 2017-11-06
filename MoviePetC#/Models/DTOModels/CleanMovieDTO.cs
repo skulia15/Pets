@@ -5,8 +5,7 @@ using System;
 /// Data Transfer Object for a movie
 /// </summary>
 namespace MoviePet.Models.DTOModels {
-    public class MovieDTO {
-        public int movieID { get; set; }
+    public class CleanMovieDTO {
         public string title { get; set; }
         public string summary { get; set; }
         public double rating { get; set; }
